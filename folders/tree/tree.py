@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 """
-This program prints the folder tree
+This program prints the folder tree starting at the current directory or the
+directory specified as first command line argument
 """
 
 import os

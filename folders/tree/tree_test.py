@@ -1,5 +1,5 @@
 """
-tree tests
+tree test cases
 """
 
 import io
@@ -17,7 +17,7 @@ class TreeTestCase(unittest.TestCase):
 
     def test_write_tree(self) -> None:
         """
-        test walk function
+        test function write_tree()
         """
 
         with tempfile.TemporaryDirectory() as tmpdir:
