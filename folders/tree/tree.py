@@ -17,7 +17,7 @@ def walk(folder: str) -> None:
         dirs.sort()
         print(root)
         for file in sorted(files):
-            print(root + os.sep + file)
+            print(os.path.join(root, file))
 
 
 def main():
