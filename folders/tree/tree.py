@@ -7,17 +7,19 @@ This program prints the folder tree
 import os
 import sys
 
+from typing import IO
 
-def walk(folder: str) -> None:
+
+def write_tree(folder: str, out: IO) -> None:
     """
-    walk file tree
+    walk file tree starting at folder and write output to out
     """
 
     for root, dirs, files in os.walk(folder):
         dirs.sort()
-        print(root)
+        print(root, file=out)
         for file in sorted(files):
-            print(os.path.join(root, file))
+            print(os.path.join(root, file), file=out)
 
 
 def main():
@@ -27,11 +29,11 @@ def main():
 
     # use folder specified by user
     if len(sys.argv) >= 2:
-        walk(sys.argv[1])
+        write_tree(sys.argv[1], sys.stdout)
         return
 
     # fall back to current directory
-    walk(os.curdir)
+    write_tree(os.curdir, sys.stdout)
 
 
 if __name__ == '__main__':
