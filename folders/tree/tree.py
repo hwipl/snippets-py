@@ -13,9 +13,10 @@ def walk(folder: str) -> None:
     walk file tree
     """
 
-    for root, _dirs, files in os.walk(folder):
+    for root, dirs, files in os.walk(folder):
+        dirs.sort()
         print(root)
-        for file in files:
+        for file in sorted(files):
             print(root + os.sep + file)
 
 
