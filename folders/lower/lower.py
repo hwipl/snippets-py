@@ -54,16 +54,26 @@ def main():
     main entry point
     """
 
-    to_lower = []
+    # use current directory or folder specified by user
+    folder = os.curdir
     if len(sys.argv) >= 2:
-        # use folder specified by user
-        to_lower = get_to_lower(sys.argv[1])
-    else:
-        # fall back to current directory
-        to_lower = get_to_lower(os.curdir)
+        folder = sys.argv[1]
 
-    for file in to_lower:
-        print(file)
+    # get list of files to be renamed and check name collisions
+    to_lower = get_to_lower(folder)
+    collisions = get_collisions(folder, to_lower)
+
+    if len(collisions) != 0:
+        print("Renaming would create collisions with the following files:")
+        for file in collisions:
+            print(file)
+        print("Aborting.")
+        return
+
+    if len(to_lower) != 0:
+        print("The following files will be renamed:")
+        for file in to_lower:
+            print(file)
 
 
 if __name__ == '__main__':
