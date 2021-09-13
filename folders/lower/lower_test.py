@@ -37,3 +37,27 @@ class LowerTestCase(unittest.TestCase):
             want = [dir_a, file_1, dir_c, file_3]
             got = lower.get_to_lower(tmpdir)
             self.assertEqual(got, want)
+
+    def test_get_collisions(self) -> None:
+        """
+        test function get_collisions()
+        """
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            # create dummy file tree
+            dir_1 = os.path.join(tmpdir, "a")
+            dir_2 = os.path.join(tmpdir, "A")
+            for folder in [dir_1, dir_2]:
+                os.mkdir(folder)
+            file_1 = os.path.join(dir_1, "F1")
+            file_2 = os.path.join(dir_2, "f2")
+            file_3 = os.path.join(dir_2, "F2")
+            for file in [file_1, file_2, file_3]:
+                with open(file, "a", encoding='UTF-8'):
+                    pass
+
+            # generate and check output
+            want = [file_2, dir_1]
+            to_lower = lower.get_to_lower(tmpdir)
+            got = lower.get_collisions(tmpdir, to_lower)
+            self.assertEqual(got, want)
