@@ -29,6 +29,26 @@ def get_to_lower(folder: str) -> List[str]:
     return to_lower
 
 
+def get_collisions(folder: str, to_lower: List[str]) -> List[str]:
+    """
+    check if renaming folders and files would create name collisions with
+    existing files; return a list of name collisions
+    """
+
+    collisions = []
+    lowered = [f.lower() for f in to_lower]
+
+    for root, _dirs, files in os.walk(folder):
+        if root in lowered:
+            collisions.append(root)
+        for file in files:
+            if os.path.join(root, file) in lowered:
+                collisions.append(os.path.join(root, file))
+            if os.path.join(root.lower(), file) in lowered:
+                collisions.append(os.path.join(root, file))
+    return collisions
+
+
 def main():
     """
     main entry point
