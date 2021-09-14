@@ -75,6 +75,7 @@ def main():
     to_lower = get_to_lower(folder)
     collisions = get_collisions(folder, to_lower)
 
+    # abort if there are name collisions
     if len(collisions) != 0:
         print("Renaming would create collisions with the following files:")
         for file in collisions:
@@ -82,10 +83,21 @@ def main():
         print("Aborting.")
         return
 
-    if len(to_lower) != 0:
-        print("The following files will be renamed:")
-        for file in to_lower:
-            print(file)
+    # abort if there are no files to rename
+    if len(to_lower) == 0:
+        return
+
+    # show files to rename
+    print("The following files will be renamed:")
+    for file in to_lower:
+        print(file)
+
+    # ask user for permission and rename files
+    rename = input("Enter 'RENAME' to continue: ")
+    if rename != "RENAME":
+        print("Aborting.")
+        return
+    rename_files(to_lower)
 
 
 if __name__ == '__main__':
