@@ -61,3 +61,31 @@ class LowerTestCase(unittest.TestCase):
             to_lower = lower.get_to_lower(tmpdir)
             got = lower.get_collisions(tmpdir, to_lower)
             self.assertEqual(got, want)
+
+    def test_rename_files(self) -> None:
+        """
+        test function rename_files()
+        """
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            # create dummy file tree
+            dir_a = os.path.join(tmpdir, "A")
+            dir_b = os.path.join(tmpdir, "b")
+            dir_c = os.path.join(tmpdir, "C")
+            for folder in [dir_a, dir_b, dir_c]:
+                os.mkdir(folder)
+            file_1 = os.path.join(dir_a, "F1")
+            file_2 = os.path.join(dir_b, "f2")
+            file_3 = os.path.join(dir_b, "F3")
+            for file in [file_1, file_2, file_3]:
+                with open(file, "a", encoding='UTF-8'):
+                    pass
+
+            # rename files and folders
+            to_lower = lower.get_to_lower(tmpdir)
+            lower.rename_files(to_lower)
+
+            # generate and check output
+            want = []
+            got = lower.get_to_lower(tmpdir)
+            self.assertEqual(got, want)
