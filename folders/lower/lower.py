@@ -49,6 +49,18 @@ def get_collisions(folder: str, to_lower: List[str]) -> List[str]:
     return collisions
 
 
+def rename_files(to_lower: List[str]) -> None:
+    """
+    Rename all files and folders in to_lower to lower case
+    """
+
+    to_lower.sort()
+    for file in to_lower:
+        head, tail = os.path.split(file)
+        file = os.path.join(head.lower(), tail)
+        os.rename(file, file.lower())
+
+
 def main():
     """
     main entry point
