@@ -1,5 +1,6 @@
 """Greetings from sqlite3"""
 
+import argparse
 import sqlite3
 
 
@@ -68,19 +69,43 @@ def main():
     for greeting in ("hello", "hi", "good day", "greetings"):
         insert_greeting(con, greeting)
 
-    # list greetings
-    list_greetings(con)
+    # command line arguments
+    parser = argparse.ArgumentParser(
+        prog='greet',
+        description='Print a greeting')
+    parser.add_argument("-r", "--run", action="store_true")
+    parser.add_argument("-l", "--list", action="store_true")
+    parser.add_argument("-i", "--id")
+    parser.add_argument("-t", "--text")
+    args = parser.parse_args()
 
-    # get greeting by id
-    get_id(con, 1)
+    print(args)
 
-    # get greeting by text
-    get_text(con, "hi")
+    if args.run:
+        # list greetings
+        list_greetings(con)
 
-    # delete greeting by id
-    delete_id(con, 1)
-    list_greetings(con)
+        # get greeting by id
+        get_id(con, 1)
 
+        # get greeting by text
+        get_text(con, "hi")
+
+        # delete greeting by id
+        delete_id(con, 1)
+        list_greetings(con)
+
+    if args.list:
+        # list greetings
+        list_greetings(con)
+
+    if args.id:
+        # get greeting by ID
+        get_id(con, args.id)
+
+    if args.text:
+        # get greeting by text
+        get_text(con, args.text)
 
 if __name__ == "__main__":
     main()
