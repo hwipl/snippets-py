@@ -1,5 +1,7 @@
 """Greetings from sqlalchemy"""
 
+import argparse
+
 from sqlalchemy import Text
 from sqlalchemy import select
 from sqlalchemy.orm import DeclarativeBase
@@ -91,18 +93,41 @@ def main():
     #    session.add_all([hello, hi, good_day, greetings])
     #    session.commit()
 
-    # list greetings
-    list_greetings(session)
+    # command line arguments
+    parser = argparse.ArgumentParser(
+        prog='greet',
+        description='Print a greeting')
+    parser.add_argument("-r", "--run", action="store_true")
+    parser.add_argument("-l", "--list", action="store_true")
+    parser.add_argument("-i", "--id")
+    parser.add_argument("-t", "--text")
+    args = parser.parse_args()
 
-    # get greeting by ID
-    get_id(session, 1)
+    if args.run:
+        # list greetings
+        list_greetings(session)
 
-    # get greeting by text
-    get_text(session, "good day")
+        # get greeting by ID
+        get_id(session, 1)
 
-    # delete greeting by ID
-    delete_id(session, 2)
-    list_greetings(session)
+        # get greeting by text
+        get_text(session, "good day")
+
+        # delete greeting by ID
+        delete_id(session, 2)
+        list_greetings(session)
+
+    if args.list:
+        # list greetings
+        list_greetings(session)
+
+    if args.id:
+        # get greeting by ID
+        get_id(session, args.id)
+
+    if args.text:
+        # get greeting by text
+        get_text(session, args.text)
 
 
 if __name__ == "__main__":
