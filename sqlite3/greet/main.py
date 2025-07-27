@@ -79,8 +79,6 @@ def main():
     parser.add_argument("-t", "--text")
     args = parser.parse_args()
 
-    print(args)
-
     if args.run:
         # list greetings
         list_greetings(con)
