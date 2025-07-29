@@ -1,0 +1,7 @@
+[project]
+name = "greet"
+version = "0.1.0"
+description = "greetings with command line arguments"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
